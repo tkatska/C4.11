@@ -154,11 +154,6 @@ export default {
     updateTodo(todo) {
       this.addTodoForm = todo;
     },
-    onUpdateReset(event) {
-      event.preventDefault();
-      this.$refs.updateTodoModal.hide();
-      this.resetForm();
-    },
   },
   deleteTodo(todo) {
     const todoURL = dataURL + todo.uid;
