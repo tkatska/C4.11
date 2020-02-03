@@ -113,9 +113,13 @@ export default {
   },
   methods: {
     getTodos() {
-      axios.get(dataURL).then((response) => {
-        this.todos = response.data.tasks;
-      });
+      axios.get(dataURL)
+        .then((response) => {
+          this.todos = response.data.tasks;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     resetForm() {
       this.addTodoForm.description = '';
@@ -130,11 +134,15 @@ export default {
         is_completed: this.addTodoForm.is_completed[0],
       };
       if (!this.addTodoForm.uid) {
-        axios.post(dataURL, requestData).then(() => {
-          this.getTodos();
-          this.confirmationMessage = `Задача '${requestData.description}' добавлена`;
-          this.showConfirmation = true;
-        });
+        axios.post(dataURL, requestData)
+          .then(() => {
+            this.getTodos();
+            this.confirmationMessage = `Задача '${requestData.description}' добавлена`;
+            this.showConfirmation = true;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } else {
         const todoURL = dataURL + this.addTodoForm.uid;
         axios.put(todoURL, requestData)
@@ -142,6 +150,9 @@ export default {
             this.getTodos();
             this.confirmationMessage = 'Задача обновлена';
             this.showConfirmation = true;
+          })
+          .catch((error) => {
+            console.log(error);
           });
       }
       this.resetForm();
@@ -157,11 +168,15 @@ export default {
   },
   deleteTodo(todo) {
     const todoURL = dataURL + todo.uid;
-    axios.delete(todoURL).then(() => {
-      this.getTodos();
-      this.confirmationMessage = 'Задача удалена из списка';
-      this.showConfirmation = true;
-    });
+    axios.delete(todoURL)
+      .then(() => {
+        this.getTodos();
+        this.confirmationMessage = 'Задача удалена из списка';
+        this.showConfirmation = true;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   components: {
     confirmation: Comformation,
