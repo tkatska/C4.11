@@ -11,6 +11,18 @@
         v-b-modal.todo-modal
       >Добавить задачу</button>
 
+      <div class="text-center my-3">
+        <b-button title="Super, we did a good job!">
+          выполненных задач: {{getCompletedTodos()}}
+        </b-button>
+      </div>
+
+      <div class="text-center my-3">
+        <b-button title="Hm need to work more">
+          невыполненных задач: {{getNotCompletedTodos()}}
+        </b-button>
+      </div>
+
       <table class='table table-dark table-stripped table-hover'>
         <thead class='thead-light'>
           <tr>
@@ -133,6 +145,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    getNotCompletedTodos() {
+      return this.todos.filter(todo => todo.is_completed === false).length;
+    },
+    getCompletedTodos() {
+      return this.todos.filter(todo => todo.is_completed !== false).length;
     },
     resetForm() {
       this.addTodoForm.description = '';
