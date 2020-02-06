@@ -175,16 +175,20 @@ export default {
             console.log(error);
           });
       } else {
-        const todoURL = dataURL + this.addTodoForm.uid;
-        axios.put(todoURL, requestData)
-          .then(() => {
-            this.getTodos();
-            this.confirmationMessage = 'Задача обновлена';
-            this.showConfirmation = true;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        if (this.addTodoForm.uid > 0) {
+          const todoURL = dataURL + this.addTodoForm.uid;
+          axios.put(todoURL, requestData)
+            .then(() => {
+              this.getTodos();
+              this.confirmationMessage = 'Задача обновлена';
+              this.showConfirmation = true;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+        this.confirmationMessage = 'UID not valid';
+        this.showConfirmation = false;
       }
       this.resetForm();
     },
